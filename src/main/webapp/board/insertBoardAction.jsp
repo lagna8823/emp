@@ -13,6 +13,7 @@
 	
 	System.out.println(""+ boardPw + boardTitle+boardContent+boardWriter);
 	
+	// 안전장치
 	if(request.getParameter("boardPw") == null || request.getParameter("boardTitle") == null ||  request.getParameter("boardContent") == null || request.getParameter("boardWriter") == null ||
 		   	request.getParameter("boardPw").equals("") || request.getParameter("boardTitle").equals("") ||  request.getParameter("boardContent").equals("") || request.getParameter("boardWriter").equals("")){
 			String msg = URLEncoder.encode("입력되지 않은 값이 있습니다.", "utf-8");
