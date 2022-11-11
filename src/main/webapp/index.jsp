@@ -35,7 +35,7 @@
          </a>      
       </li>
       <li>      
-         <a href="<%=request.getContextPath()%>/borad/boardList.jsp">
+         <a href="<%=request.getContextPath()%>/board/boardList.jsp">
             <p class="h2 text-center text-bg-warning rounded-circle">게시판관리</p>
          </a>      
       </li>

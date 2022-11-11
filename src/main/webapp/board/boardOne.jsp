@@ -8,7 +8,7 @@
 	// 2-1 게시글 하나
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees","root","java1234");
-	String boardSql = "SELECT board_title boardTitle, board_content boardContent, board_writer boardWriter, createdate FROM board WHERE board_no = ?";
+	String boardSql = "SELECT board_title boardTitle, board_content boardContent, board_writer boardWriter, createdate FROM board WHERE board_no  = ?";
 	PreparedStatement boardStmt = conn.prepareStatement(boardSql);
 	boardStmt.setInt(1, boardNo);
 	ResultSet boardRs = boardStmt.executeQuery();

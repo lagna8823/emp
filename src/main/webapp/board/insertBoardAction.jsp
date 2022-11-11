@@ -13,18 +13,17 @@
 	
 	System.out.println(""+ boardPw + boardTitle+boardContent+boardWriter);
 	
+	if(request.getParameter("boardPw") == null || request.getParameter("boardTitle") == null ||  request.getParameter("boardContent") == null || request.getParameter("boardWriter") == null ||
+		   	request.getParameter("boardPw").equals("") || request.getParameter("boardTitle").equals("") ||  request.getParameter("boardContent").equals("") || request.getParameter("boardWriter").equals("")){
+			String msg = URLEncoder.encode("입력되지 않은 값이 있습니다.", "utf-8");
+			response.sendRedirect(request.getContextPath()+"/board/insertBoardForm.jsp?="+"&msg="+msg);
+			return;
+	   	}
+	
 	// 2. 요청처리
 	Class.forName("org.mariadb.jdbc.Driver"); // mariadb 드라이버 로딩
 	System.out.println("드라이버로딩성공");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234"); //DB연결
-	
-	
-	if(request.getParameter("boardPw") == null || request.getParameter("boardTitle") == null ||  request.getParameter("boardContent") == null || request.getParameter("boardWriter") == null ||
-	   	request.getParameter("boardPw").equals("") || request.getParameter("boardTitle").equals("") ||  request.getParameter("boardContent").equals("") || request.getParameter("boardWriter").equals("")){
-		String msg = URLEncoder.encode("입력되지 않은 값이 있습니다.", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/board/insertBoardForm.jsp?="+"&msg="+msg);
-		return;
-   	}
 	
 	int boardNo = 0;
 	//쿼리 문자열 생성
