@@ -42,7 +42,7 @@
       e.empNo = empRs.getInt("empNo");
       e.firstName = empRs.getString("firstName");
       e.lastName = empRs.getString("lastName");   
-      empList.add(e);
+      empList.add(e); //empList에 e참조값들을 넣는다 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    }
 %>
 
@@ -59,6 +59,12 @@
    </div>   
    
    <h1>사원목록</h1>
+  
+   <div>
+    <table board="1">
+		<a href="<%=request.getContextPath()%>/emp/insertEmpForm.jsp?">사원 추가</a>
+	</div>
+	</table>
    <div>현재 페이지 : <%=currentPage%></div>
    <table border="1">
       <tr>
@@ -89,7 +95,9 @@
             <a href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage-1%>">이전</a>
       <%
          }
-      
+      %>
+      	<span><%=currentPage%></span>
+      <%
          if(currentPage < lastPage) {
       %>
             <a href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage+1%>">다음</a>   

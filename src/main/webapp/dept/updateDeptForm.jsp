@@ -22,6 +22,9 @@
 	stmt.setString(1, deptNo);
 	ResultSet rs =stmt.executeQuery();
 	
+	// if 블럭 안에 쓰면 밖에서 못쓰기 때문에 블럭 밖에서 변수를 지정해놓고 블럭안의 값을 저장해둔다
+	 // 변수를 지정해놨기 때문에 if문 안에다가 출력을 적을 필요가 없어진다. 요청과 출력을 분리
+	   
 	Department dept = null;
 	if(rs.next()) {
 		dept = new Department();

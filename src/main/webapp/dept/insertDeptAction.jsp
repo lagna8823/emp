@@ -26,7 +26,7 @@
    	System.out.println("드라이버 로딩 성공");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
 	
-	// 2-1 dept-no 중복검사
+	// 2-1 dept_no 중복검사
 	String sql1 = "SELECT * FROM departments WHERE dept_no = ? OR dept_name = ?";
 	PreparedStatement stmt1 = conn.prepareStatement(sql1);	
 	stmt1.setString(1, deptNo);
@@ -38,7 +38,7 @@
 		return;
 	}
 			
-	// 2-3 입력
+	// 2-2 입력
 	String sql2 = "insert into departments(dept_no, dept_name) values(?,?)"; 
 	PreparedStatement stmt2 = conn.prepareStatement(sql2);
 	stmt2.setString(1, deptNo);
