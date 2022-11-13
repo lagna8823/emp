@@ -12,16 +12,16 @@
 	String commentContent = request.getParameter("commentContent");
 	String commentPw = request.getParameter("commentPw");
 	
-	System.out.println(boardNo + "" + commentContent + "" + commentPw + "" + commentNo);
+	System.out.println(boardNo + "" + commentContent + "" + commentPw + "" + commentNo+"!!!!!!!!!!!");
 
 	 // 2. 요청처리
     Class.forName("org.mariadb.jdbc.Driver"); // mariadb 드라이버 로딩
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
-	String sql = "SELECT board_no boardNo, comment_pw commentPw, comment_content commentContent, comment_no commentNo, createdate  FROM board WHERE board_no=?"; 
+	String sql = "SELECT board_no boardNo, comment_content commentContent, comment_no commentNo, createdate  FROM comment WHERE board_no=?"; 
 	PreparedStatement stmt = conn.prepareStatement(sql);	
 	stmt.setInt(1, boardNo);
 	ResultSet rs =stmt.executeQuery();
-	
+		
 	
 	Comment c = new Comment();
 	c.commentPw = null;
@@ -30,10 +30,10 @@
 	c.creatdate =  null;
 
 	if(rs.next()) {
-		c.commentPw = rs.getString("commentPw");
+		boardNo = rs.getInt("boardNo");
 		c.commentContent = rs.getString("commentContent");
-		c.commentNo = rs.getInt("commentNo");
-		c.creatdate = rs.getString("creatdate");
+		c.commentNo =  rs.getInt("commentNo");
+		c.creatdate = rs.getString("createdate");
 	}
 	
 
@@ -89,12 +89,6 @@
 					<td>
 						<input type="password" name="commentPw" value="">
 					</td>				
-				</tr>
-				<tr>
-					<td>생성날짜</td>
-					<td>
-					<input type="text" name="createdate" value="<%=c.creatdate%>" readonly="readonly"> 
-					</td>					
 				</tr>
 				<tr>
 					<td colspan="2">

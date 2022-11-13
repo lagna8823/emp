@@ -43,67 +43,98 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>boardList</title>
-</head>
-<body>
-	<!-- 메뉴 partial jsp 구성 -->
-	<div>
-		<jsp:include page="/inc/menu.jsp"></jsp:include>
-	</div>
+	<head>
+	<meta charset="UTF-8">
+	<title>boardList.jsp</title>
 	
-	<h1>자유 게시판</h1>
-	<div>
-		<a href="<%=request.getContextPath()%>/board/insertBoardForm.jsp?">게시글 입력</a>
-	</div>
-	<!-- 3-1. 모델데이터(ArrayList<Board>) 출력 -->	
-	<table border="1">
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-		</tr>
+	<!-- 부트스트랩과의 약속! -->
+		<!-- Latest compiled and minified CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Latest compiled JavaScript -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		
-		<%
-			for(Board b : boardList) {
-		%>
-				<tr>
-					<td><%=b.boardNo%></td>
-					<!-- 제목 클릭시 상세보기 이동 -->
-					<td>
-						<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
-							<%=b.boardTitle%>
-						</a>
-					</td>
-				</tr>
-		<%		
-			}
-		%>
-	</table>
+	<!--스타일 -->
+	<style>
 	
-	<!-- 3-2. 페이징 -->
-	<div>
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
+		.table {
+			width: 60%;
+			height: 100px;
+					}	
 		
-		<%
-			if(currentPage > 1) {
-		%>
-				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>">이전</a>
-		<%		
-			}
-		%>
+		.font1 {
+			font-size : 20pt;
+			line-height : 30px;
+			text-algin: right;
+		}
+		.background{
+			background-image: url(<%=request.getContextPath()%>/img/cat1.PNG);
+			background-repeat: no-repeat;
+			background-position: right;
+			background-attachment: fixed;
+			background-size: 28% 420px;
+		}
 		
-		<span><%=currentPage%></span>
+          
+	</style>
+	</head>
+	<body class="background">
+		<!-- 메뉴 partial jsp 구성 -->
+		<div>
+			<jsp:include page="/inc/menu.jsp"></jsp:include>
+		</div>
 		
-		<%
-			if(currentPage < lastPage) {
-		%>
-				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>">다음</a>	
-		<%		
-			}
-		%>
+		<h1 align="center"><p style ="font-weight : 900;" class="text-black"> 자유게시판&#128049;</p></h1>
+		<div align="right" >
+			<a href="<%=request.getContextPath()%>/board/insertBoardForm.jsp?" ><span class="font1">&#9997;게시글 입력</span></a>
+		</div>
 		
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
-	</div>
-</body>
+		<!-- 3-1. 모델데이터(ArrayList<Board>) 출력 -->	
+		<table class="table">
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+			</tr>
+			
+			<%
+				for(Board b : boardList) {
+			%>
+					<tr>
+						<td><%=b.boardNo%></td>
+						<!-- 제목 클릭시 상세보기 이동 -->
+						<td>
+							<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
+								<%=b.boardTitle%>
+							</a>
+						</td>
+					</tr>
+			<%		
+				}
+			%>
+		</table>
+		
+		<!-- 3-2. 페이징 -->
+		<div align="center">
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
+			
+			<%
+				if(currentPage > 1) {
+			%>
+					<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>">이전</a>
+			<%		
+				}
+			%>
+			
+			<span><%=currentPage%></span>
+			
+			<%
+				if(currentPage < lastPage) {
+			%>
+					<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>">다음</a>	
+			<%		
+				}
+			%>
+			
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
+		</div>
+	</body>
 </html>
