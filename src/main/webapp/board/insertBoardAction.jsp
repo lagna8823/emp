@@ -46,5 +46,5 @@
 	} else {
 		System.out.println("입력실패");
 	}
-	response.sendRedirect(request.getContextPath() + "/board/boardtList.jsp");
+	response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
 %>
