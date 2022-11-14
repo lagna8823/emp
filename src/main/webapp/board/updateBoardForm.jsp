@@ -74,7 +74,7 @@
 		%>
 	
 		<form action="<%=request.getContextPath()%>/board/updateBoardAction.jsp">
-			<table>
+			<table class="table table-hover w-auot">
 				<tr>
 					<td><span>게시글 번호</span></td>
 					<td>

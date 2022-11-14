@@ -49,6 +49,11 @@
 					margin: auto;
 					text-algin:center;
 				}	
+				.font1 {
+				   font-size : 20pt;
+				   line-height : 30px;
+				   text-algin: right;
+		}
 			</style>
 	</head>
 	<body>
@@ -60,17 +65,17 @@
 		<div>접속하신걸 환영합니다</div>
 		<div>당신의 하루를 응원합니다</div>
 		</h4>
-		<div>
+		<div align="center">
 			<a href="<%=request.getContextPath()%>/dept/insertDeptForm.jsp">
-			<span class="h2" >부서추가</span>
+			<span class="font1">부서 추가하기</span>
 			</a>
 		</div>
 		<table>
 			<tr>
 				<th><span class="bg-warning">부서번호</span></th>
 				<th><span class="bg-warning">부서이름</span></th>
-				<th><span class="text-primary">수정</span></th>
-				<th><span class="text-danger">삭제</span></th>
+				<th><span class="bg-warning" "text-primary">수정</span></th>
+				<th><span class="bg-warning" "text-danger">삭제</span></th>
 			</tr>
 			<%
 				for(Department d : list) { // 자바문법에서 제공하는 foreach문
@@ -78,9 +83,12 @@
 					<tr>
 						<td><%=d.deptNo%></td>
 						<td><%=d.deptName%></td>
-						<td><a href="<%=request.getContextPath()%>/dept/updateDeptForm.jsp?deptNo=<%=d.deptNo%>">수정</a></td>
+						<td><a href="<%=request.getContextPath()%>/dept/updateDeptForm.jsp?deptNo=<%=d.deptNo%>" style="text-decoration: none;">
+							수정
+							</a>
+						</td>
 						<td>
-							<a href="<%=request.getContextPath()%>/dept/deleteDept.jsp?deptNo=<%=d.deptNo%>">
+							<a href="<%=request.getContextPath()%>/dept/deleteDept.jsp?deptNo=<%=d.deptNo%>" style="text-decoration: none;">
 								<span class="text-danger">삭제</span>
 							</a>
 						</td>

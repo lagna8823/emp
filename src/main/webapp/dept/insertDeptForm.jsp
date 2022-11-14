@@ -45,14 +45,16 @@
 			<table>
 				<tr>
 					<td>
-						<span>부서번호</span>
+						<span class="bg-warning">부서번호</span>
 					</td>
 					<td>
 						<input type="text" name="deptNo" value="">
 					</td>				
 				</tr>
 				<tr>
-					<td>부서명</td>
+					<td>
+						<span class="bg-warning">부서명</span>
+					</td>
 					<td>
 					<input type="text" name="deptName" value="">
 					</td>				

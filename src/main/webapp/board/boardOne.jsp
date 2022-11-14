@@ -55,52 +55,66 @@
    }
    // 2-3 댓글 전체행의 수 -> lastPage
    int lastPage = 0;
-   // 3 
+   
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>boardOne.jsp</title>
+		
+		<!-- 부트스트랩과의 약속! -->
+		<!-- Latest compiled and minified CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Latest compiled JavaScript -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>	
 	</head>
 	<body>
-	   <!-- 메뉴 partial jsp 구성 -->
-	   <div>
-	      <jsp:include page="/inc/menu.jsp"></jsp:include>
-	   </div>
+	    <!-- 메뉴 partial jsp 구성 -->
+	    <div>
+		<jsp:include page="/inc/menu.jsp"></jsp:include>
+	    </div>
+    	<div align="center">
+   			<h1>게시글 상세보기</h1>
+	    </div>
 	   
-	   <h1>게시글 상세보기</h1>
 	   
-	   <table border="1">
-	      <tr>
-	         <td>번호</td>
-	         <td><%=board.boardNo%></td>
-	      </tr>
-	      <tr>
-	         <td>제목</td>
-	         <td><%=board.boardTitle%></td>
-	      </tr>
-	      <tr>
-	         <td>내용</td>
-	         <td><%=board.boardContent%></td>
-	      </tr>
-	      <tr>
-	         <td>글쓴이</td>
-	         <td><%=board.boardWriter%></td>
-	      </tr>
-	      <tr>
-	         <td>생성날짜</td>
-	         <td><%=board.createdate%></td>
-	      </tr>
+		<table  class="table table-hover">
+			<tr>
+			   <td>번호</td>
+			   <td><%=board.boardNo%></td>
+			</tr>
+			<tr>
+			   <td>제목</td>
+			   <td><%=board.boardTitle%></td>
+			</tr>
+			<tr>
+			   <td>내용</td>
+			   <td><%=board.boardContent%></td>
+			</tr>
+			<tr>
+			   <td>글쓴이</td>
+			   <td><%=board.boardWriter%></td>
+			</tr>
+			<tr>
+			   <td>생성날짜</td>
+			   <td><%=board.createdate%></td>
+			</tr>
 	   </table>
-	      <a href="<%=request.getContextPath()%>/board/updateBoardForm.jsp?boardNo=<%=boardNo%>">수정</a>
-	      <a href="<%=request.getContextPath()%>/board/deleteBoardForm.jsp?boardNo=<%=boardNo%>">삭제</a>
-	
-	   <div>
-	      <!-- 댓글입력 폼 -->
-	      <h2>댓글입력</h2>
-	      
-  	   	  <!-- msg 파라메타값이 있으면 출력 -->
+		<a href="<%=request.getContextPath()%>/board/updateBoardForm.jsp?boardNo=<%=boardNo%>" style="text-decoration: none;">
+		<span>수정</span>
+		</a>
+		<a href="<%=request.getContextPath()%>/board/deleteBoardForm.jsp?boardNo=<%=boardNo%>" style="text-decoration: none;">
+		   	<span class="text-danger">삭제</span>
+		</a>
+		<br><br>
+	    <div>
+			<!-- 댓글입력 폼 -->
+			<div align="left">
+			<h3>댓글입력</h3>
+			</div>
+			
+			  <!-- msg 파라메타값이 있으면 출력 -->
 			<%
 				if(request.getParameter("msg") != null){
 			%>
@@ -108,63 +122,68 @@
 			<%
 				}
 			%>	
-		  <br>	
-	      <form action="<%=request.getContextPath()%>/board/insertCommentAction.jsp" method="post">
-	         <input type="hidden" name="boardNo" value="<%=board.boardNo%>">
-	         <table border="1">
-	            <tr>
-	               <td>내용</td>
-	               <td><textarea rows="3" cols="80" name="commentContent"></textarea></td>
-	            </tr>
-	            <tr>
-	               <td>비밀번호</td>
-	               <td><input type="password" name="commentPw"></td>
-	            </tr>
-	         </table>
-	         <button type="submit">댓글입력</button>
-	         <%
-	          	for(Comment c : commentList) {
-	         %>
-	            <div>
-	               <div>
-	                  <%=c.commentNo%>
-	                  <a href="<%=request.getContextPath()%>/board/updateCommentForm.jsp?commentNo=<%=c.commentNo%>&boardNo=<%=boardNo%>">
-	                     [수정]
-	                  </a>
-	                  <a href="<%=request.getContextPath()%>/board/deleteCommentForm.jsp?commentNo=<%=c.commentNo%>&boardNo=<%=boardNo%>">
-	                     [삭제]
-	                  </a>
-	               </div>
-	               <div><%=c.commentContent%></div>
-	            </div>
-	        <%      
-	       		}
-	        %>
-	      </form>
-	   </div>
+				<br>	
+				<form action="<%=request.getContextPath()%>/board/insertCommentAction.jsp" method="post">
+				<input type="hidden" name="boardNo" value="<%=board.boardNo%>">
+				<div align="left">
+	         		<table>
+			            <tr>
+			               <td>내용</td>
+			               <td><textarea rows="3" cols="80" name="commentContent"></textarea></td>
+			            </tr>
+			            <tr>
+			               <td>비밀번호</td>
+			               <td><input type="password" name="commentPw"></td>	
+			            </tr>
+			         </table>
+	         		 <button type="submit">댓글입력</button>
+       			</div>
+       			<br><br>
+	         	<!-- 댓글 목록 -->
+	         	<div text-algin="left">	 
+	         		<h2>댓글목록</h2>	 
 	   
-	   <div>
-	      <!-- 댓글 목록 -->
-	      <h2>댓글목록</h2>
-	      
-	      <!-- 댓글 페이징 -->
-	      <%
-	         if(currentPage > 1) {
-	      %>
-	            <a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage-1%>">
-	               이전
-	            </a>
-	      <%      
-	         }
-	         // 다음 <-- 마지막페이지 <-- 전체행의 수 
-	         if(currentPage < lastPage) {
-	      %>
-	            <a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage+1%>">
-	               다음
-	            </a>
-	      <%   
-	         }
-	      %>
-	   </div>
+			         <%
+			          	for(Comment c : commentList) {
+			         %>
+				            <div>
+				               <div>
+				                  <%=c.commentNo%>
+				                  <a href="<%=request.getContextPath()%>/board/updateCommentForm.jsp?commentNo=<%=c.commentNo%>&boardNo=<%=boardNo%>" style="text-decoration: none;">
+				                     [수정]
+				                  </a>
+				                  <a href="<%=request.getContextPath()%>/board/deleteCommentForm.jsp?commentNo=<%=c.commentNo%>&boardNo=<%=boardNo%>" style="text-decoration: none;">
+				                  	<span class="text-danger"> [삭제]</span>
+				                  </a>
+				               </div>
+				               		<div><%=c.commentContent%></div>
+					           </div>
+			         <%      
+			       		}
+			         %>
+				</form>
+			</div>
+			<div>
+			   
+			   
+			   <!-- 댓글 페이징 -->
+			   <%
+			      if(currentPage > 1) {
+			   %>
+			         <a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage-1%>">
+			            <span>이전</span>
+			         </a>
+			   <%      
+			      }
+			      // 다음 <-- 마지막페이지 <-- 전체행의 수 
+			      if(currentPage < lastPage) {
+			   %>
+			         <a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage+1%>">
+			             <span>다음</span>
+			         </a>
+			   <%   
+			      }
+			   %>
+			</div>
 	</body>
 </html>

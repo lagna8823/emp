@@ -64,7 +64,7 @@
 		</style>
 	</head>
 	<body> 
-		<h2> <p align="center">댓글 수정 </p></h2>
+		<h2> <p align="center">댓글 수정 </p></h2><br>
 		<!-- msg 파라메타값이 있으면 출력 -->
 		<%
 			if(request.getParameter("msg") != null){
@@ -77,22 +77,23 @@
 		<form action="<%=request.getContextPath()%>/board/updateCommentAction.jsp">
 			<input type="hidden" name="boardNo" value="<%=boardNo%>">
 			<input type="hidden" name="commentNo" value="<%=c.commentNo%>">
-			<table>
+			<table class="table">
 				<tr>
-					<td>내용</td>
+					<td><span class="bg-warning">내용</span></td>
 					<td>
 						<textarea rows="8" cols="80" name="commentContent"><%=c.commentContent%></textarea>
 					</td>					
 				</tr>
 				<tr>
-					<td><span>비밀번호</span></td> 
+					<td><span class="bg-secondary">비밀번호</span></td> 
 					<td>
 						<input type="password" name="commentPw" value="">
 					</td>				
 				</tr>
 				<tr>
 					<td colspan="2">
-					<button type="submit">수정하기</button>
+					<span class="text-primary" text="center">한번 더 확인해주세요</span>
+					<button type="submit" class="btn btn-outline-primary">수정하기</button>
 					</td>				
 				</tr>
 			</table>

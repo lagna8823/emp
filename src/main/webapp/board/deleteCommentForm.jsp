@@ -30,14 +30,21 @@
 		<!-- 테이블 스타일 -->
 		<style>
 			table {
-				width: 60%;
+				width: 100%;
 				height: 100px;
 				margin: auto;
 				text-algin:center;
 			}		
+			.background{
+		   background-image: url(<%=request.getContextPath()%>/img/cat2.jpg);
+		   background-repeat: no-repeat;
+		   background-position: bottom; 
+		   background-attachment: fixed;
+		   background-size: 40% 400px;
+		}
 		</style>
 	</head>
-	<body> 
+	<body class="background"> 
 		<!-- 메뉴 patial jsp 구성-->
 		<div>
 			<jsp:include page="/inc/menu.jsp"></jsp:include> <!-- include에 한해서는 emp주체? 이기에  -->
@@ -53,11 +60,23 @@
 		%>
 	
 		<form action="<%=request.getContextPath()%>/board/deleteCommentAction.jsp">	
-		<input type="hidden" name="boardNo" value="<%=boardNo%>">
-		<input type="hidden" name="commentNo" value="<%=commentNo%>">
-		삭제할 비밀번호 : 
-		<input type="password" name="commentPw">
+		<div align="center">
+		<table class="table" >
+			<tr>
+				<td>
+					<input type="hidden" name="boardNo" value="<%=boardNo%>">
+					<input type="hidden" name="commentNo" value="<%=commentNo%>">
+					<span class="h1">삭제 비밀번호 : </span>
+					<input type="password" name="commentPw">
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+		<span class="text-danger">한번 더 확인해주세요</span>
 		<button type="submit">삭제</button>
+		</div>
 		</form>		
 	</body>
 </html>

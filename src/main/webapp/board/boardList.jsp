@@ -76,8 +76,8 @@
 		<!--스타일 -->
 		<style>
 		
-		.table {
-		    width: 60%;
+		.table1 {
+		    width: 40%;
 		    height: 100px;
 		 }   
 		
@@ -91,7 +91,7 @@
 		   background-repeat: no-repeat;
 		   background-position: right;
 		   background-attachment: fixed;
-		   background-size: 28% 420px;
+		   background-size: 28% 380px;
 		}
 		</style>
 	</head>
@@ -110,11 +110,15 @@
 	      <input type="text" name="word" id="word" value="<%=word%>">
 	      <button type="submit">검색</button>
   	 </form>
+  	 
   	 <div align="right" >
-		<a href="<%=request.getContextPath()%>/board/insertBoardForm.jsp?" ><span class="font1">&#9997;게시글 입력</span></a>
+		<a href="<%=request.getContextPath()%>/board/insertBoardForm.jsp?" style="text-decoration: none;">
+		<span class="font1">&#9997;게시글 입력</span>
+		</a>
 	</div>
+	
     <!-- 3-1. 모델데이터(ArrayList<Board>) 출력 -->	
-	<table class="table">
+	<table class="table left" style="width:950px;" align="left">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
@@ -127,51 +131,52 @@
 			<td><%=b.boardNo%></td>
 			<!-- 제목 클릭시 상세보기 이동 -->
 			<td>
-				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
+				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>" style="text-decoration: none;">
 				<%=b.boardTitle%>
 				</a>
 			</td>
 		</tr>
+		
 	<%		
 		}
 	%>
 	</table>
-
-	<!-- 3-2. 페이징 -->
+		<!-- 3-2. 페이징 -->
+	<div align= "right">
 	<%
 	if(word == null|| word.equals("")){
 	%>
-		<div align="center">
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
+		
+		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1" style="text-decoration: none;">처음</a>
 
 		<%
 			if(currentPage > 1) {
 		%>
-				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>">이전</a>
+				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>" style="text-decoration: none;">이전</a>
 		<%		
 			}
 		%>
 				<span><%=currentPage%></span>
 
 		<%
-			if(currentPage < lastPage) {
+			if(currentPage <lastPage) {
 		%>
-			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>">다음</a>	
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>" style="text-decoration: none;">다음</a>	
 		<%		
 			}
 		%>
-			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
-		</div>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>" style="text-decoration: none;">마지막</a>
+		
 	<%
 	} else {
 	%>	
-		<div align="center">
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1&word=<%=word%>">처음</a>
+		
+		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1&word=<%=word%>" style="text-decoration: none;">처음</a>
 
 		<%
 			if(currentPage > 1) {
 		%>
-				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>&word=<%=word%>">이전</a>
+				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>&word=<%=word%>" style="text-decoration: none;">이전</a>
 		<%		
 			}
 		%>
@@ -180,12 +185,12 @@
 		<%
 			if(currentPage < lastPage) {
 		%>
-			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>&word=<%=word%>">다음</a>	
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>&word=<%=word%>" style="text-decoration: none;">다음</a>	
 		<%		
 			}
 		%>
-			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>&word=<%=word%>">마지막</a>
-		</div>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>&word=<%=word%>" style="text-decoration: none;">마지막</a>
+	</div>
 	
 	<%	
 	}

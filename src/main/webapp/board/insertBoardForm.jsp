@@ -43,7 +43,7 @@
 		%>
 	
 		<form action="<%=request.getContextPath()%>/board/insertBoardAction.jsp">
-			<table>
+			<table class="table table-hover w-auot text-center">
 				<tr>
 					<td> <span>제목</span></td>
 					<td>
