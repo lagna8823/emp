@@ -1,37 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.sql.*" %>
-<%@ page import = "vo.*" %> <!-- vo.Salary -->
 <%@ page import = "java.util.*" %>
+<%@ page import ="vo.*" %>
+
 <%
-	 // 1 요청 분석 검색기능, 페이징...
-	 String word = request.getParameter("word");
-	 int currentPage = 1;
-	 if(request.getParameter("currentPage") != null) {
-	    currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	 }
-	 
-	 // 2. 요청처리 
-	 final int ROW_PER_PAGE = 10; // 상수 선언 문법
-	 int beginRow = (currentPage-1)*ROW_PER_PAGE; 
-	 
-	 //드라이버 로딩 및 DB 연결
-	 Class.forName("org.mariadb.jdbc.Driver");
-	 Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
- 	 
- 	// 검색기능 
- 	String cntSql = null;
- 	PreparedStatement cntStmt = null;
+	// 1) 요청분석
+	String word = request.getParameter("word");
+	int currentPage = 1;
+	if(request.getParameter("currentpage") != null){
+		currentpage = Integer.ParseInt(request.getParameter("currentPage"));
+	}
+	
+	// 2) 요청처리
+	int ROW_PER_PAGE = 10;
+	int beginRow = (currentPage-1)*ROW_PER_PAGE;
+	// db -> 모델생성
+	String driver = "org.mriadb.jdbc.Driver";
+	String dburl = "jdbc:mariadb://loacalhost:3306/employees";
+	String dbUser = "root";
+	String dbPw = "java1234";
+	
+	Class.forName("driver"); //드라이브 로딩(드라이버매니저 클래스를 쓸수잇게됨)
+	Connection conn = DriverManager.getConnection("dburl","dbUser","dbPw"); 
+	
+	// 검색기능 
+ 	String cntSql = null; //sql문을 담을 변수
+ 	PreparedStatement cntStmt = null; //sql문에 값을 세팅할 변수
  	if(word == null || word.equals("")) {
- 		cntSql = "SELECT COUNT(*) cnt FROM salaries";
- 		cntStmt = conn.prepareStatement(cntSql);		
+ 		cntSql = "SELECT COUNT(*) cnt FROM employees";
+		cntStmt = conn.prepareStatement(cntSql); 
+		word="";
  	} else {
- 		cntSql = "SELECT COUNT(*) cnt FROM salaries s INNER JOIN employees e ON s.emp_no = e.emp_no WHERE e.first_name LIKE ? OR e.last_name LIKE?";
- 		cntStmt = conn.prepareStatement(cntSql);
- 		cntStmt.setString(1, "%"+word+"%");    
- 		cntStmt.setString(2, "%"+word+"%");    
+ 		cntSql = "SELECT COUNT(*) cnt FROM employees WHERE d.dept_no?";
+		cntStmt = conn.prepareStatement(cntSql);
+		cntStmt.setString(1, "%"+word+"%");    
+		cntStmt.setString(2, "%"+word+"%");    
  	}
- 	
- 	// 검색 결과 쿼리 값세팅
+	 	
+ 	// 검색 결과 쿼리 값세팅 
  	ResultSet cntRs = cntStmt.executeQuery();
 	int cnt = 0; // 전체 행의 수
     if(cntRs.next()) {
@@ -39,38 +45,53 @@
     }
 	int lastPage = (int)(Math.ceil((double)cnt / (double)ROW_PER_PAGE)); // 마지막 페이지 설정(정수화)
 	
- 	//	조건 검색(LIKE)
- 	String salarySql = null;
-	PreparedStatement salaryStmt = null; 
+	//	조건 검색(JOIN)
+	String selectSql = null; //sql문을 담을 변수
+	PreparedStatement selectStmt = null; //sql문에 값을 세팅할 변수
+	
 	if(word == null || word.equals("")) {
-		salarySql = "SELECT s.emp_no empNo, s.salary salary, s.from_date fromDate, s.to_date toDate, e.first_name firstName, e.last_name lastName FROM salaries s INNER JOIN employees e ON s.emp_no = e.emp_no ORDER BY s.emp_no ASC LIMIT ?,?";
-		salaryStmt = conn.prepareStatement(salarySql);
-		salaryStmt.setInt(1, beginRow);
-		salaryStmt.setInt(2, ROW_PER_PAGE);
- 		word="";	
+		selectSql = "SELECT de.emp_no, e.first_name, d.dept_name, de.from_date, de.to_date FROM dept_emp de INNER JOIN employees e ON de.emp_no = e.emp_no INNER JOIN departments d ON de.dept_no = d.dept_no ASC LIMIT ?, ?;";
+		selectStmt = conn.prepareStatement(empSql);
+		selectStmt.setInt(1, beginRow);
+		selectStmt.setInt(2, ROW_PER_PAGE);
 	} else {
-		salarySql = "SELECT s.emp_no empNo, s.salary salary, s.from_date fromDate, s.to_date toDate, e.first_name firstName, e.last_name lastName FROM salaries s INNER JOIN employees e ON s.emp_no = e.emp_no WHERE e.first_name LIKE ? OR e.last_name LIKE ? ORDER BY s.emp_no ASC LIMIT ?,?";
-		salaryStmt = conn.prepareStatement(salarySql);
-		salaryStmt.setString(1, "%"+word+"%");    
-		salaryStmt.setString(2, "%"+word+"%");    
-		salaryStmt.setInt(3, beginRow);
-		salaryStmt.setInt(4, ROW_PER_PAGE);
+		selectSql = "SELECT de.emp_no, first_name firstName, last_name lastName FROM employees WHERE first_name LIKE ? OR last_name LIKE ? ORDER BY emp_no ASC LIMIT ?, ?";
+		selectStmt = conn.prepareStatement(empSql);
+		selectStmt.setString(1, "%"+word+"%"); 
+		selectStmt.setString(2, "%"+word+"%"); 
+		selectStmt.setInt(3, beginRow);
+		selectStmt.setInt(4, ROW_PER_PAGE);         
 	}
 	
-	ResultSet salaryRs = salaryStmt.executeQuery();
-	ArrayList<Salary> salaryList = new ArrayList<>();
-	while(salaryRs.next()) {
-		Salary s = new Salary();
-		s.emp = new Employee(); // ☆☆☆☆☆
-		s.emp.empNo = salaryRs.getInt("empNo");
-		s.salary = salaryRs.getInt("salary");
-		s.fromDate = salaryRs.getString("fromDate");
-		s.toDate = salaryRs.getString("toDate");
-		s.emp.firstName = salaryRs.getString("firstName");
-		s.emp.lastName = salaryRs.getString("lastName");
-		salaryList.add(s);
+	
+	selectSql = "SELECT de.emp_no, e.first_name, d.dept_name, de.from_date, de.to_date 
+					FROM dept_emp de INNER JOIN employees e 
+					ON de.emp_no = e.emp_no 
+					INNER JOIN departments d 
+					ON de.dept_no = d.dept_no ASC LIMIT ?, ?;";
+	
+		
+			
+	ArrayList<DeptEmp> list = new ArrayList<DeptEmp>();
+	while(rs.next()) {
+	   DeptEmp de = new DeptEmp();
+	   de.emp = new Employee();
+	   de.emp.empNo = rs.getInt("empNo");
+	   de.dept = new Department();
+	   de.dept.deptNo = rs.getInt("deptNo");
+	   de.fromDate = 
+	   de.toDate = 
 	}
 %>
+<%
+   // DeptEmp.class가 없다면
+   // deptEmpMapList.jsp
+   ArrayList<HashMap<String, Ojbect>> list = new ArrayList<String, Ojbect>();
+   while(rs.next()) {
+      //...
+   }
+%>
+
 <!DOCTYPE html>
 <html>
 	<head>

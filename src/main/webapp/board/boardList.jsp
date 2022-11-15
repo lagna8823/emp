@@ -30,16 +30,16 @@
 		cntSql = "SELECT COUNT(*) cnt FROM board";
 		cntStmt = conn.prepareStatement(cntSql); 
 		word="";
-		} else {
-      		listSql = "SELECT board_no boardNo, board_title boardTitle FROM board WHERE board_content LIKE ? ORDER BY board_no ASC LIMIT ?, ?";
-			listStmt = conn.prepareStatement(listSql);
-			listStmt.setString(1, "%"+word+"%"); 
-			listStmt.setInt(2, beginRow);
-			listStmt.setInt(3, ROW_PER_PAGE);         
-			cntSql = "SELECT COUNT(*) cnt FROM board WHERE board_content LIKE ?";
-			cntStmt = conn.prepareStatement(cntSql);
-			cntStmt.setString(1, "%"+word+"%");    
-		}
+	} else {
+     		listSql = "SELECT board_no boardNo, board_title boardTitle FROM board WHERE board_content LIKE ? ORDER BY board_no ASC LIMIT ?, ?";
+		listStmt = conn.prepareStatement(listSql);
+		listStmt.setString(1, "%"+word+"%"); 
+		listStmt.setInt(2, beginRow);
+		listStmt.setInt(3, ROW_PER_PAGE);         
+		cntSql = "SELECT COUNT(*) cnt FROM board WHERE board_content LIKE ?";
+		cntStmt = conn.prepareStatement(cntSql);
+		cntStmt.setString(1, "%"+word+"%");    
+	}
   
   	// 2-2
   
