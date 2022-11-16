@@ -30,7 +30,7 @@
 		cntStmt = conn.prepareStatement(cntSql); 
 		word="";
 	} else {
-     		empSql = "SELECT emp_no empNo, first_name firstName, last_name lastName FROM employees WHERE first_name LIKE ? OR last_name LIKE ? ORDER BY emp_no ASC LIMIT ?, ?";
+     	empSql = "SELECT emp_no empNo, first_name firstName, last_name lastName FROM employees WHERE first_name LIKE ? OR last_name LIKE ? ORDER BY emp_no ASC LIMIT ?, ?";
 		empStmt = conn.prepareStatement(empSql);
 		empStmt.setString(1, "%"+word+"%"); 
 		empStmt.setString(2, "%"+word+"%"); 

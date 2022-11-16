@@ -63,7 +63,7 @@
 		stmt.setInt(3, ROW_PER_PAGE);    
 		
 	}	
-	
+	// 클래스를 이용
 	ResultSet rs = stmt.executeQuery();
 	ArrayList<DeptEmp> list = new ArrayList<DeptEmp>();
 	while(rs.next()) {
@@ -127,7 +127,7 @@
 		<div>
 		   <jsp:include page="/inc/menu.jsp"></jsp:include>
 		</div>
-
+		<!-- 헤드라인 -->
 		<h1 align="center"><p style ="font-weight : 900;" class="text-black"> 사원 상세정보&#128049;</p></h1>
 	
 	
@@ -137,7 +137,8 @@
 		      <input type="text" name="word" id="word" value="<%=word%>">
 		      <button type="submit">검색</button>
 	  	</form>
-		<table class="table table-hover w-auot">
+	  	<!--  폼작성-->
+			<table class="table table-hover w-auot">
 			<tr>
 				<th>사번</th>
 				<th>이름</th>
